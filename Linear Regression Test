@@ -1,0 +1,43 @@
+
+##Linear Regression Code
+# Convert time columns to full datetime
+crime['start_ts'] = pd.to_datetime(crime['START_DATE'], errors='coerce')
+crime['end_ts'] = pd.to_datetime(crime['END_DATE'], errors='coerce')
+
+# Feature engineering
+crime['hour'] = crime['start_ts'].dt.hour
+crime['duration'] = (crime['end_ts'] - crime['start_ts']).dt.total_seconds() / 60  # in minutes
+
+# Drop missing or invalid entries
+crime = crime.dropna(subset=['hour', 'duration', 'offense'])
+crime = crime[crime['duration'] >= 0]
+
+# Encode offense for regression (caution: categorical to numeric!)
+le = LabelEncoder()
+crime['offense_encoded'] = le.fit_transform(crime['offense'])
+
+# Define features and target
+X = crime[['hour', 'duration']]
+y = crime['offense_encoded']
+
+# Split into training/testing
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Build and train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Evaluation
+print("R² Score:", r2_score(y_test, y_pred))
+print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+
+# Visualization
+plt.scatter(y_test, y_pred, alpha=0.4)
+plt.xlabel("Actual Offense (encoded)")
+plt.ylabel("Predicted Offense")
+plt.title("Multiple Linear Regression: Offense Prediction")
+plt.grid(True)
+plt.show()
