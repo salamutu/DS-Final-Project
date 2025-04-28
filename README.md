@@ -2,6 +2,8 @@
 
 #### Also in Jupyter Notebook
 
+## Authored by:  Sam Alamutu, Polina Grushia, Brenna Henry, Elisabeth Kollrack, Ellie Sheppard
+
 ### Introduction
 Our project focused on analyzing the “Crime Incidents in 2024” dataset, which is a detailed record of crimes reported to the Maryland Police Department and made available on Data.gov. Entries in the dataset include the type of offense, date, and time it occurred, and its location. Some entries also include information about the status of the crime and outcomes of the incident. We aimed to answer the following question: What factors affect the type of offense committed? Using variables such as time and date, location, and other available information, we gained insight into the relationships between the context and the crime committed. Understanding these relationships can help develop strategies to increase public safety and allocate resources more effectively.
 
